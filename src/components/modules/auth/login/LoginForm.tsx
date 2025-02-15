@@ -18,6 +18,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { loginUser } from "@/services/AuthServices";
 import { toast } from "sonner";
 import { loginSchema } from "./loginValidation";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const LoginForm = () => {
   const form = useForm({
@@ -40,6 +41,11 @@ const LoginForm = () => {
       console.error(error);
     }
   };
+
+  const handleRecaptchaChange = (data: string | null) => {
+    console.log(data);
+  };
+
   return (
     <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-md w-full p-5">
       <div className="flex items-center space-x-4 ">
@@ -79,7 +85,12 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
-
+          <div className="flex justify-center mt-3">
+            <ReCAPTCHA
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY as string}
+              onChange={handleRecaptchaChange}
+            />
+          </div>
           <Button type="submit" className="mt-5 w-full">
             {isSubmitting ? "Logging..." : "Login"}
           </Button>
