@@ -15,7 +15,7 @@ import Link from "next/link";
 import React from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
-import { loginUser, registerUser } from "@/services/AuthServices";
+import { loginUser } from "@/services/AuthServices";
 import { toast } from "sonner";
 import { loginSchema } from "./loginValidation";
 
