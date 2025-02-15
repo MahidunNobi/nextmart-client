@@ -1,8 +1,9 @@
-import { getCurrentUser } from "@/services/AuthServices";
-import React from "react";
+"use client";
 
-const HomePage = async () => {
-  const user = await getCurrentUser();
+import { useUser } from "@/context/UserContext";
+
+const HomePage = () => {
+  const user = useUser();
   console.log(user);
 
   return <div>Wellcome to next mart</div>;

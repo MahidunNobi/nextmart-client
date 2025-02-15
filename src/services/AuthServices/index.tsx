@@ -13,8 +13,13 @@ export const registerUser = async (userData: FieldValues) => {
       body: JSON.stringify(userData),
     });
 
-    return res.json();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // ---------Setting Cookie--------
+    const result = await res.json();
+    if (result.success) {
+      (await cookies()).set("accessToken", result.data.accessToken);
+    }
+
+    return result;
   } catch (error: any) {
     return Error(error);
   }
@@ -29,13 +34,13 @@ export const loginUser = async (userData: FieldValues) => {
       },
       body: JSON.stringify(userData),
     });
+    // ---------Setting Cookie--------
     const result = await res.json();
     if (result.success) {
       (await cookies()).set("accessToken", result.data.accessToken);
     }
 
     return result;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     return Error(error);
   }
