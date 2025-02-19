@@ -23,7 +23,7 @@ const UserContext = createContext<IUserContextProvider | undefined>(undefined);
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<IUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-
+  console.log(isLoading);
   const fetchUser = async () => {
     const user = await getCurrentUser();
     setUser(user);
@@ -42,7 +42,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export const useUser = () => {
-  const context = useContext(UserContext);
+  const context = useContext<IUserContextProvider | undefined>(UserContext);
   if (context == undefined) {
     return Error("useUser hook must be use inside the UserProvider");
   }
