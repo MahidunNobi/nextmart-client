@@ -13,9 +13,11 @@ import { Input } from "@/components/ui/input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import Logo from "@/app/assets/svgs/Logo";
-import { useState } from "react";
-import { toast } from "sonner";
 import NMImageUploader from "@/components/ui/core/NMImageUploader";
+import { useState } from "react";
+import ImagePreviewer from "@/components/ui/core/NMImageUploader/ImagePreviewer";
+
+import { toast } from "sonner";
 
 export default function CreateShopForm() {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
@@ -44,13 +46,13 @@ export default function CreateShopForm() {
       formData.append("data", JSON.stringify(modifiedData));
       formData.append("logo", imageFiles[0] as File);
 
-      const res = await createShop(formData);
+      // const res = await createShop(formData);
 
-      console.log(res);
+      // console.log(res);
 
-      if (res.success) {
-        toast.success(res.message);
-      }
+      // if (res.success) {
+      //   toast.success(res.message);
+      // }
     } catch (err: any) {
       console.error(err);
     }
@@ -226,22 +228,22 @@ export default function CreateShopForm() {
               />
             </div>
 
-            {/* {imagePreview.length > 0 ? (
+            {imagePreview.length > 0 ? (
               <ImagePreviewer
                 setImageFiles={setImageFiles}
                 imagePreview={imagePreview}
                 setImagePreview={setImagePreview}
                 className="mt-8"
               />
-            ) : ( */}
-            <div className="mt-8">
-              <NMImageUploader
-              //   setImageFiles={setImageFiles}
-              //   setImagePreview={setImagePreview}
-              //   label="Upload Logo"
-              />
-            </div>
-            {/* )} */}
+            ) : (
+              <div className="mt-8">
+                <NMImageUploader
+                  setImageFiles={setImageFiles}
+                  setImagePreview={setImagePreview}
+                  label="Upload Logo"
+                />
+              </div>
+            )}
           </div>
 
           <Button type="submit" className="mt-5 w-full">
