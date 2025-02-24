@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCurrentUser } from "./services/AuthServices";
+import { ProtectedRoute } from "./constants";
 
 type Role = keyof typeof roleBasedPrivetRoutes;
 
@@ -11,6 +12,7 @@ const roleBasedPrivetRoutes = {
 export const middleware = async (request: NextRequest) => {
   const { pathname } = request.nextUrl;
   const userInfo = await getCurrentUser();
+  //   return NextResponse.next()
   if (!userInfo) {
     return NextResponse.redirect(
       `http://localhost:3000/login?redirectPath=${pathname}`
