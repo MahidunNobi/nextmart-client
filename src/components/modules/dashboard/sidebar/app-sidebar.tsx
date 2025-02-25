@@ -20,7 +20,6 @@ import { NavUser } from "./nav-user";
 import Logo from "@/app/assets/svgs/Logo";
 import Link from "next/link";
 
-// This is sample data.
 const data = {
   navMain: [
     {
@@ -40,7 +39,7 @@ const data = {
         },
         {
           title: "Manage Categories",
-          url: "/user/shop/manage-categories",
+          url: "/user/shop/category",
         },
         {
           title: "Manage Brands",
