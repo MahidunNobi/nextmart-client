@@ -15,3 +15,11 @@ export const createCategory = async (data: FormData) => {
     console.log(error);
   }
 };
+export const getCategories = async () => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/category`);
+    return res.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
