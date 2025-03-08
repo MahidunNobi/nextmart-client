@@ -5,7 +5,8 @@ import { TCategory } from "@/types/category";
 import { NMTable } from "@/components/ui/core/NMTable/NMTable";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
-import { Trash } from "lucide-react";
+
+import DeleteCategoryModel from "./DeleteCategoryModel";
 import { deleteCategory } from "@/services/Category";
 
 type TManageCategoryProps = {
@@ -13,8 +14,8 @@ type TManageCategoryProps = {
 };
 
 const ManageCategory = ({ categories }: TManageCategoryProps) => {
-  const handleDelete = async (category: TCategory) => {
-    const res = await deleteCategory(category._id);
+  const handleDelete = async (id: string) => {
+    const res = await deleteCategory(id);
     console.log(res);
   };
 
@@ -56,13 +57,17 @@ const ManageCategory = ({ categories }: TManageCategoryProps) => {
       accessorKey: "action",
       header: () => <div>Action</div>,
       cell: ({ row }) => (
-        <button
-          className="text-red-500"
-          title="Delete"
-          onClick={() => handleDelete(row.original)}
-        >
-          <Trash className="w-5 h-5" />
-        </button>
+        // <button
+        //   className="text-red-500"
+        //   title="Delete"
+        //   onClick={() => handleDelete(row.original)}
+        // >
+        //   <Trash className="w-5 h-5" />
+        // </button>
+        <DeleteCategoryModel
+          handleDelete={handleDelete}
+          id={row.original._id}
+        />
       ),
     },
   ];
