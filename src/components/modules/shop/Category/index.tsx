@@ -6,13 +6,17 @@ import { NMTable } from "@/components/ui/core/NMTable/NMTable";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 import { Trash } from "lucide-react";
+import { deleteCategory } from "@/services/Category";
 
 type TManageCategoryProps = {
   categories: TCategory[];
 };
 
 const ManageCategory = ({ categories }: TManageCategoryProps) => {
-  const handleDelete = (category: TCategory) => {};
+  const handleDelete = async (category: TCategory) => {
+    const res = await deleteCategory(category._id);
+    console.log(res);
+  };
 
   const columns: ColumnDef<TCategory>[] = [
     {

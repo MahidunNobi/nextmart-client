@@ -23,3 +23,19 @@ export const getCategories = async () => {
     console.log(error);
   }
 };
+export const deleteCategory = async (id: string) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/category/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: (await cookies()).get("accessToken")?.value as string,
+        },
+      }
+    );
+    return res.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
