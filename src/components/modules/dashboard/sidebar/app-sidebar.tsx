@@ -43,7 +43,7 @@ const data = {
         },
         {
           title: "Manage Brands",
-          url: "/user/shop/manage-brands",
+          url: "/user/shop/brand",
         },
       ],
     },

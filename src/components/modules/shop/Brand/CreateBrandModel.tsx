@@ -1,4 +1,3 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import NMImageUploader from "@/components/ui/core/NMImageUploader";
 import ImagePreviewer from "@/components/ui/core/NMImageUploader/ImagePreviewer";
@@ -18,13 +17,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { createCategory } from "@/services/Category";
+import { createBrand } from "@/services/Brand";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-const CreateCategoryModel = () => {
+const CreateBrandModel = () => {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreview, setImagePreview] = useState<string[] | []>([]);
   const form = useForm();
@@ -35,13 +33,12 @@ const CreateCategoryModel = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      console.log(data);
       const formData = new FormData();
       formData.append("data", JSON.stringify(data));
-      formData.append("icon", imageFiles[0]);
+      formData.append("logo", imageFiles[0] as File);
 
-      const res = await createCategory(formData);
-      console.log(res);
+      const res = await createBrand(formData);
+
       if (res.success) {
         toast.success(res.message);
       } else {
@@ -55,48 +52,17 @@ const CreateCategoryModel = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button> Create Category</Button>
+        <Button> Create Brand</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add Category</DialogTitle>
+          <DialogTitle>Add Brand</DialogTitle>
         </DialogHeader>
         {/* ------------- Actual Form----------- */}
         <div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name</FormLabel>
-                    <FormControl>
-                      <Input type="name" {...field} value={field.value || ""} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <div className="mt-4 flex flex-col md:flex-row items-center justify-between gap-3">
-                <FormField
-                  control={form.control}
-                  name="description"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Description</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          className="h-36 md:w-72"
-                          {...field}
-                          value={field.value || ""}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+              <div>
                 {imagePreview.length > 0 ? (
                   <ImagePreviewer
                     setImageFiles={setImageFiles}
@@ -115,13 +81,33 @@ const CreateCategoryModel = () => {
                 )}
               </div>
 
-              <Button
-                // disabled={!reCaptachaStatus}
-                type="submit"
-                className="mt-5 w-full"
-              >
-                {isSubmitting ? "Creating..." : "Create"}
-              </Button>
+              <div className="mt-4 flex flex-col md:flex-row items-end justify-between gap-3">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel>Name</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="name"
+                          {...field}
+                          value={field.value || ""}
+                          className=""
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  // disabled={!reCaptachaStatus}
+                  type="submit"
+                  className="w-[180px]"
+                >
+                  {isSubmitting ? "Creating..." : "Create"}
+                </Button>
+              </div>
             </form>
           </Form>
         </div>
@@ -130,4 +116,4 @@ const CreateCategoryModel = () => {
   );
 };
 
-export default CreateCategoryModel;
+export default CreateBrandModel;
