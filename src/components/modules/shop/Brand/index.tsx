@@ -7,6 +7,7 @@ import Image from "next/image";
 import { deleteCategory } from "@/services/Category";
 import DeleteBrandModel from "./DeleteBrandModel";
 import CreateBrandModel from "./CreateBrandModel";
+import { deleteBrand } from "@/services/Brand";
 
 type TManageCategoryProps = {
   categories: TCategory[];
@@ -14,7 +15,7 @@ type TManageCategoryProps = {
 
 const ManageBrand = ({ categories }: TManageCategoryProps) => {
   const handleDelete = async (id: string) => {
-    const res = await deleteCategory(id);
+    const res = await deleteBrand(id);
     console.log(res);
   };
 
@@ -69,7 +70,7 @@ const ManageBrand = ({ categories }: TManageCategoryProps) => {
   ];
   return (
     <div>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center my-6">
         <h1 className="text-2xl font-semibold">Manage Category</h1>
         <CreateBrandModel />
       </div>

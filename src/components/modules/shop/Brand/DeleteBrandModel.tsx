@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -25,7 +24,7 @@ const DeleteBrandModel = ({ handleDelete, id }: PropTypes) => {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Are you sure to delete this category?</DialogTitle>
+          <DialogTitle>Are you sure to delete this brand?</DialogTitle>
         </DialogHeader>
         {/* ------------- Actual Form----------- */}
         <div>
@@ -35,11 +34,9 @@ const DeleteBrandModel = ({ handleDelete, id }: PropTypes) => {
             category?{" "}
           </p>
           <div className="text-right mt-6">
-            <DialogClose>
-              <Button variant={"destructive"} onClick={() => handleDelete(id)}>
-                Delete
-              </Button>
-            </DialogClose>
+            <Button variant={"destructive"} onClick={() => handleDelete(id)}>
+              Delete
+            </Button>
           </div>
         </div>
       </DialogContent>
