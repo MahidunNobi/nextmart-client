@@ -35,13 +35,12 @@ const CreateCategoryModel = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      console.log(data);
       const formData = new FormData();
       formData.append("data", JSON.stringify(data));
       formData.append("icon", imageFiles[0]);
 
       const res = await createCategory(formData);
-      console.log(res);
+
       if (res.success) {
         toast.success(res.message);
       } else {
