@@ -8,7 +8,7 @@ const BrandPage = async () => {
 
   return (
     <div>
-      <ManageBrand categories={data} />
+      <ManageBrand brands={data} />
     </div>
   );
 };

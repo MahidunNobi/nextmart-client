@@ -12,10 +12,10 @@ import { toast } from "sonner";
 import { TBrand } from "@/types/brand";
 
 type TManageBrandProps = {
-  categories: TBrand[];
+  brands: TBrand[];
 };
 
-const ManageBrand = ({ categories }: TManageBrandProps) => {
+const ManageBrand = ({ brands }: TManageBrandProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedId, setSelectedId] = useState("");
 
@@ -26,9 +26,10 @@ const ManageBrand = ({ categories }: TManageBrandProps) => {
   const handleDeleteConfirm = async () => {
     try {
       const res = await deleteBrand(selectedId);
-      console.log(res);
+
       if (res.success) {
         setIsOpen(false);
+        setSelectedId("");
         toast.success(res.message);
       } else {
         toast.error(res.message);
@@ -92,7 +93,7 @@ const ManageBrand = ({ categories }: TManageBrandProps) => {
         <h1 className="text-2xl font-semibold">Manage Category</h1>
         <CreateBrandModel />
       </div>
-      <NMTable data={categories} columns={columns} />
+      <NMTable data={brands} columns={columns} />
       <DeleteConfirmationModel
         name="Brand"
         isOpen={isOpen}
