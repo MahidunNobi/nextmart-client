@@ -1,32 +1,51 @@
 "use client";
-import React from "react";
-import { TCategory } from "@/types/category";
+import React, { useState } from "react";
+
 import { NMTable } from "@/components/ui/core/NMTable/NMTable";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
-import { deleteCategory } from "@/services/Category";
-import DeleteBrandModel from "./DeleteBrandModel";
 import CreateBrandModel from "./CreateBrandModel";
 import { deleteBrand } from "@/services/Brand";
+import DeleteConfirmationModel from "@/components/ui/core/NMModel/DeleteConfirmationModel";
+import { Trash } from "lucide-react";
+import { toast } from "sonner";
+import { TBrand } from "@/types/brand";
 
-type TManageCategoryProps = {
-  categories: TCategory[];
+type TManageBrandProps = {
+  categories: TBrand[];
 };
 
-const ManageBrand = ({ categories }: TManageCategoryProps) => {
+const ManageBrand = ({ categories }: TManageBrandProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState("");
+
   const handleDelete = async (id: string) => {
-    const res = await deleteBrand(id);
-    console.log(res);
+    setIsOpen(true);
+    setSelectedId(id);
+  };
+  const handleDeleteConfirm = async () => {
+    try {
+      const res = await deleteBrand(selectedId);
+      console.log(res);
+      if (res.success) {
+        setIsOpen(false);
+        toast.success(res.message);
+      } else {
+        toast.error(res.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const columns: ColumnDef<TCategory>[] = [
+  const columns: ColumnDef<TBrand>[] = [
     {
       accessorKey: "name",
       header: () => <div>Category Name</div>,
       cell: ({ row }) => (
         <div className="flex items-center space-x-3">
           <Image
-            src={"https://github.com/shadcn.png"}
+            src={row.original.logo}
             alt={row.original.name}
             width={40}
             height={40}
@@ -57,14 +76,13 @@ const ManageBrand = ({ categories }: TManageCategoryProps) => {
       accessorKey: "action",
       header: () => <div>Action</div>,
       cell: ({ row }) => (
-        // <button
-        //   className="text-red-500"
-        //   title="Delete"
-        //   onClick={() => handleDelete(row.original)}
-        // >
-        //   <Trash className="w-5 h-5" />
-        // </button>
-        <DeleteBrandModel handleDelete={handleDelete} id={row.original._id} />
+        <button
+          className="text-red-500"
+          title="Delete"
+          onClick={() => handleDelete(row.original._id)}
+        >
+          <Trash className="w-5 h-5" />
+        </button>
       ),
     },
   ];
@@ -75,6 +93,12 @@ const ManageBrand = ({ categories }: TManageCategoryProps) => {
         <CreateBrandModel />
       </div>
       <NMTable data={categories} columns={columns} />
+      <DeleteConfirmationModel
+        name="Brand"
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+        onConfirm={() => handleDeleteConfirm()}
+      />
     </div>
   );
 };
