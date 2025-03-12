@@ -8,7 +8,8 @@ import { deleteCategory } from "@/services/Category";
 import { toast } from "sonner";
 import { Trash } from "lucide-react";
 import DeleteConfirmationModel from "@/components/ui/core/NMModel/DeleteConfirmationModel";
-import CreateProductModel from "./CreateProductModel";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 type TManageCategoryProps = {
   categories: TCategory[];
@@ -130,7 +131,10 @@ const ManageProduct = ({ categories }: TManageCategoryProps) => {
     <div>
       <div className="flex justify-between items-center my-6">
         <h1 className="text-2xl font-semibold">Manage Products</h1>
-        <CreateProductModel />
+        <Link href={"/user/shop/products/add-product"}>
+          {" "}
+          <Button> Add Product +</Button>{" "}
+        </Link>
       </div>
       <NMTable data={[]} columns={columns} />
       <DeleteConfirmationModel
